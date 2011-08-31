@@ -45,13 +45,11 @@ local function readfq(fp)
 	end
 end
 
-function countfq() -- for testing only
-	local n, slen, qlen = 0, 0, 0
-	for name, seq, qual in readfq(io.stdin) do
-		n, slen = n + 1, slen + #seq
-		qlen = qlen + (qual and #qual or 1)
-	end
-	print(n, slen, qlen)
-end
+-- for testing only
 
-countfq()
+local n, slen, qlen = 0, 0, 0
+for name, seq, qual in readfq(io.stdin) do
+	n, slen = n + 1, slen + #seq
+	qlen = qlen + (qual and #qual or 1)
+end
+print(n, slen, qlen)
