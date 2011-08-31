@@ -9,7 +9,7 @@ local function readfq(fp)
 					break;
 				end
 			end
-			if last == nil then -- this is the end of the file
+			if last == nil then -- reach the end of the file (EOF)
 				finished = true;
 				return nil;
 			end
@@ -19,11 +19,11 @@ local function readfq(fp)
 		local seqs, c = {}; -- c is the first character of the last line
 		for l in fp:lines() do -- read sequence
 			c = l:byte(1);
-			if c == 62 or c == 64 or c == 43 then
+			if c == 62 or c == 64 or c == 43 then -- ">" || "@" || "+"
 				last = l;
 				break;
 			end
-			table.insert(seqs, l);
+			table.insert(seqs, l); -- similar to python, string cat is inefficient
 		end
 		if last == nil then finished = true end -- end of file
 		if c ~= 43 then return name, table.concat(seqs) end -- a fasta record
@@ -34,11 +34,11 @@ local function readfq(fp)
 			len = len + #l;
 			if len >= #seq then -- we have read enough qualities
 				last = nil;
-				return name, seq, table.concat(seqs);
+				return name, seq, table.concat(seqs); -- a fastq record
 			end
 		end
-		finished = true;
-		return name, seq;
+		finished = true; -- reach EOF
+		return name, seq; -- incomplete fastq quality; return a fasta record
 	end
 end
 
