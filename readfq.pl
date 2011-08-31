@@ -27,20 +27,17 @@ sub readfq {
 	while (<$fh>) {
 		chomp;
 		$c = substr($_, 0, 1);
-		if ($c eq '>' || $c eq '@' || $c eq '+') {
-			$aux->[0] = $_;
-			last;
-		}
+		last if ($c eq '>' || $c eq '@' || $c eq '+');
 		$seq .= $_;
 	}
+	$aux->[0] = $_;
 	$aux->[1] = 1 if (!defined($aux->[0]));
 	return ($name, $seq) if ($c ne '+');
-	my ($l, $qual) = (0, '');
+	my $qual = '';
 	while (<$fh>) {
 		chomp;
 		$qual .= $_;
-		$l += length;
-		if ($l >= length($seq)) {
+		if (length($qual) >= length($seq)) {
 			$aux->[0] = undef;
 			return ($name, $seq, $qual);
 		}
