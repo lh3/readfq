@@ -27,7 +27,7 @@ def readfq(fp): # this is a generator function
 			seq, leng, seqs = ''.join(seqs), 0, []
 			for l in fp: # read the quality
 				seqs.append(l[:-1])
-				leng += len(l)
+				leng += len(l) - 1
 				if (leng >= len(seq)): # have read enough quality
 					last = None
 					yield name, seq, ''.join(seqs); # yield a fastq record
