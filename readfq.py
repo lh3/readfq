@@ -1,5 +1,4 @@
 def readfq(fp): # this is a generator function
-    import string
     last = None # this is a buffer keeping the last unprocessed line
     while (True): # mimic closure; is it a bad idea?
         if last is None: # the first record or a record following a fastq
