@@ -6,16 +6,21 @@ Perl and Python as a single function less than 50 lines. For users of scripting
 languages, I encourage to copy-and-paste the function instead of using readfq
 as a library. It is always good to avoid unnecessary library dependencies.
 
-The C implementation is distributed under the MIT license (you can modify and
-redistribute at will, but you need to acknowlege me). Implementations in other
-languages are released without a license. Just copy and paste and forget me.
-The following shows a brief example for each programming language:
+Readfq also strives for efficiency. The C implementation is among the fastest
+(if not the fastest). The Python and Perl implementations are several to tens
+of times faster than the official Bio* implementations. If you can speed up
+readfq further, please let me. I am not good at optimizing scripting languages.
+Thank you.
+
+As to licensing, the C implementation is distributed under the MIT license.
+Implementations in other languages are released without a license. Just copy
+and paste. You do not need to acknowledge me. The following shows a brief
+example for each programming language:
 
 
   # Perl
   my @aux = undef; # this is for keeping intermediate data
-  my ($name, $seq, $qual);
-  while (($name, $seq, $qual) = readfq(\*STDIN, \@aux)) { print "$seq\n"; }
+  while (my ($name, $seq, $qual) = readfq(\*STDIN, \@aux)) { print "$seq\n"; }
 
 
   # Python: generator function
