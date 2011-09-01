@@ -9,8 +9,8 @@ as a library. It is always good to avoid unnecessary library dependencies.
 Readfq also strives for efficiency. The C implementation is among the fastest
 (if not the fastest). The Python and Perl implementations are several to tens
 of times faster than the official Bio* implementations. If you can speed up
-readfq further, please let me. I am not good at optimizing scripting languages.
-Thank you.
+readfq further, please let me know. I am not good at optimizing programs in
+scripting languages. Thank you.
 
 As to licensing, the C implementation is distributed under the MIT license.
 Implementations in other languages are released without a license. Just copy
@@ -47,3 +47,12 @@ example for each programming language:
     gzclose(fp);
     return 0;
   }
+
+
+Some naive benchmarks. To convert a FASTQ containing 25 million 100bp reads to FASTA,
+FASTX-Toolkit (parsing 4-line FASTQ only) takes 325.0 CPU seconds and EMBOSS' seqret
+247.8 seconds. My seqtk, which uses the kseq.h library, finishes the task in 24.6
+seconds, 10X faster. For retrieving 25k sequences by name from the same FASTQ,
+BioPython takes 963 seconds, while readfq.py takes 136 seconds; BioPerl takes more
+than 40 minutes (killed), while readfq.pl 273 seconds. Seqtk takes 29 seconds.
+
