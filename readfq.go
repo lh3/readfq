@@ -3,10 +3,22 @@ package main
 import (
   "bufio"
   "bytes"
+  "fmt"
   "io"
-	"os"
-	"fmt"
+  "os"
 )
+
+func main() {
+  n, sLen, qLen := 0, int64(0), int64(0)
+  var fqr FqReader
+  fqr.Reader = bufio.NewReader(os.Stdin)
+  for r, done := fqr.Iter(); !done; r, done = fqr.Iter() {
+    n += 1
+    sLen += int64(len(r.Seq))
+    qLen += int64(len(r.Qual))
+  }
+  fmt.Printf("%v\t%v\t%v\n", n, sLen, qLen)
+}
 
 // Record contains the data from a fasta fastq record
 type record struct {
@@ -90,14 +102,4 @@ func (fq *FqReader) Iter() (record, bool) {
   return fq.rec, fq.finished // incomplete fastq quality, return what we have
 }
 
-func main() {
- 	n, sLen, qLen := 0, int64(0), int64(0)
-  var fqr FqReader
-  fqr.Reader = bufio.NewReader(os.Stdin)
-  for r, done := fqr.Iter(); !done; r, done = fqr.Iter() {
-    n += 1
-    sLen += int64(len(r.Seq))
-    qLen += int64(len(r.Qual))
-  }
-  fmt.Println(n, "\t", sLen, "\t", qLen)
-}
+

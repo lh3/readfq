@@ -30,6 +30,33 @@ example for each programming language:
   -- Lua: closure
   for name, seq, qual in readfq(io.stdin) do print seq end
 
+  // Go
+  import "fmt"
+  import "fasta"
+  func main() {
+    var fqr fasta.FqReader
+    fqr.Reader = bufio.NewReader(os.Stdin)
+    for r, done := fqr.Iter(); !done; r, done = fqr.Iter() {
+    fmt.Println(r.Seq)
+    }
+  }
+
+  /* Go */
+  package main
+
+  import (
+    "fmt"
+    "bufio"
+    "github.com/drio/drio.go/bio/fasta"
+  )
+
+  func main() {
+    var fqr fasta.FqReader
+    fqr.Reader = bufio.NewReader(os.Stdin)
+    for r, done := fqr.Iter(); !done; r, done = fqr.Iter() {
+			fmt.Println(r.Seq)
+    }
+  }
 
   /* C */
   #include <zlib.h>
