@@ -43,7 +43,7 @@ example for each programming language:
     var fqr fasta.FqReader
     fqr.Reader = bufio.NewReader(os.Stdin)
     for r, done := fqr.Iter(); !done; r, done = fqr.Iter() {
-			fmt.Println(r.Seq)
+      fmt.Println(r.Seq)
     }
   }
 
