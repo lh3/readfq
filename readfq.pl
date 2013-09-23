@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 
+use 5.010;
 use strict;
 use warnings;
 
@@ -20,8 +21,8 @@ sub readfq {
 			return;
 		}
 	}
-	my $name = /^.(\S+\s+\S+)/? $1 :
-	           /^.(\S+)/? $1 : '';
+	my ($name, $comm) = /^.(\S+)(?:\s+)(\S+)/ ? ($1, $2) : 
+	                    /^.(\S+)/ ? ($1, '') : ('', '');
 	my $seq = '';
 	my $c;
 	$aux->[0] = undef;
@@ -33,14 +34,14 @@ sub readfq {
 	}
 	$aux->[0] = $_;
 	$aux->[1] = 1 if (!defined($aux->[0]));
-	return ($name, $seq) if ($c ne '+');
+	return ($name, $comm, $seq) if ($c ne '+');
 	my $qual = '';
 	while (<$fh>) {
 		chomp;
 		$qual .= $_;
 		if (length($qual) >= length($seq)) {
 			$aux->[0] = undef;
-			return ($name, $seq, $qual);
+			return ($name, $comm, $seq, $qual);
 		}
 	}
 	$aux->[1] = 1;
@@ -48,11 +49,10 @@ sub readfq {
 }
 
 my @aux = undef;
-my ($name, $seq, $qual);
+my ($name, $comm, $seq, $qual);
 my ($n, $slen, $qlen) = (0, 0, 0);
-while (($name, $seq, $qual) = readfq(\*STDIN, \@aux)) {
+while (($name, $comm, $seq, $qual) = readfq(\*STDIN, \@aux)) {
 	++$n;
 	$slen += length($seq);
 	$qlen += length($qual) if ($qual);
 }
-print join("\t", $n, $slen, $qlen), "\n";
