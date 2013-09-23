@@ -20,7 +20,8 @@ sub readfq {
 			return;
 		}
 	}
-	my $name = /^.(\S+)/? $1 : '';
+	my $name = /^.(\S+\s+\S+)/? $1 :
+	           /^.(\S+)/? $1 : '';
 	my $seq = '';
 	my $c;
 	$aux->[0] = undef;
