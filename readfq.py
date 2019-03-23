@@ -6,7 +6,8 @@ def readfq(fp):  # this is a generator function
                 if l[0] in '>@':  # fasta/q header line
                     last = l[:-1]  # save this line
                     break
-        if not last: break
+        if not last:
+            break
         name, seqs, last = last[1:].partition(" ")[0], [], None
         for l in fp:  # read the sequence
             if l[0] in '@+>':
@@ -15,7 +16,8 @@ def readfq(fp):  # this is a generator function
             seqs.append(l[:-1])
         if not last or last[0] != '+':  # this is a fasta record
             yield name, ''.join(seqs), None  # yield a fasta record
-            if not last: break
+            if not last:
+                break
         else:  # this is a fastq record
             seq, leng, seqs = ''.join(seqs), 0, []
             for l in fp:  # read the quality
