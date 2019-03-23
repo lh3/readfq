@@ -23,7 +23,7 @@ def readfq(fp): # this is a generator function
                 leng += len(l) - 1
                 if leng >= len(seq): # have read enough quality
                     last = None
-                    yield name, seq, ''.join(seqs); # yield a fastq record
+                    yield name, seq, ''.join(seqs) # yield a fastq record
                     break
             if last: # reach EOF before reading enough quality
                 yield name, seq, None # yield a fasta record instead
