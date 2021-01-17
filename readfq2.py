@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-
-
 BUFFER_SIZE = 1024 * 1024;
 
 def readfq(fp): # this is a generator function
