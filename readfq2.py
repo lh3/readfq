@@ -20,8 +20,6 @@ def readfq(fp): # this is a generator function
         n = len(lines)
         m = 4 * int((n-1)/4)
         r = n - m
-        #if r != 4 or not newline:
-        #    rest = lines[m:n]
         if newline and r == 4:
             rest = []
             m = m + 1
