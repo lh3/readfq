@@ -2,7 +2,6 @@
 
 import sys
 import itertools
-import numba
 
 def readfq(fp): # this is a generator function
 
